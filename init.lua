@@ -127,6 +127,7 @@ vim.o.undofile = true
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
 vim.o.smartcase = true
+vim.o.tabstop = 2
 
 -- Keep signcolumn on by default
 vim.o.signcolumn = 'yes'
@@ -248,7 +249,40 @@ rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
+  'github/copilot.vim',
 
+  {
+    'stevearc/oil.nvim',
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {},
+    -- Optional dependencies
+    dependencies = { { 'nvim-mini/mini.icons', opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+    lazy = false,
+    config = function()
+      require('oil').setup {
+        vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' }),
+        view_options = {
+          show_hidden = true,
+        },
+        skip_confirm_for_simple_edits = true,
+      }
+    end,
+  },
+
+  {
+    'okuuva/auto-save.nvim',
+    cmd = 'ASToggle',
+    event = { 'InsertLeave', 'TextChanged' },
+    opts = {
+      -- Auto-save after leaving insert mode
+      trigger_events = { 'InsertLeave', 'BufLeave' },
+      -- Save at most every 100 milliseconds
+      debounce_delay = 100,
+    },
+  },
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -681,7 +715,8 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
+        ts_ls = {},
+        csharp_ls = {},
         --
 
         lua_ls = {
@@ -835,7 +870,7 @@ require('lazy').setup({
         -- <c-k>: Toggle signature help
         --
         -- See :h blink-cmp-config-keymap for defining your own keymap
-        preset = 'default',
+        preset = 'enter',
 
         -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
