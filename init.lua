@@ -205,6 +205,11 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
+--
+-- Copy to system clipboard in normal mode
+vim.keymap.set('n', '<C-c>', '"+y$', { desc = 'Copy to system clipboard (EOL)' })
+-- Copy to system clipboard in visual mode
+vim.keymap.set('v', '<C-c>', '"+y', { desc = 'Copy to system clipboard' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -250,7 +255,6 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
   'github/copilot.vim',
-
   {
     'stevearc/oil.nvim',
     ---@module 'oil'
