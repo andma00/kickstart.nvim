@@ -254,7 +254,18 @@ rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
-  'github/copilot.vim',
+  {
+    'github/copilot.vim',
+    config = function()
+      -- Enable copilot
+      vim.g.copilot_no_tab_map = true
+      vim.keymap.set('i', '<S-Tab>', 'copilot#Accept("\\<CR>")', {
+        expr = true,
+        replace_keycodes = false,
+      })
+      vim.g.copilot_no_tab_map = true
+    end,
+  },
   {
     'stevearc/oil.nvim',
     ---@module 'oil'
