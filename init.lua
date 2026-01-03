@@ -277,10 +277,7 @@ require('lazy').setup({
     cmd = 'ASToggle',
     event = { 'InsertLeave', 'TextChanged' },
     opts = {
-      -- Auto-save after leaving insert mode
-      trigger_events = { 'InsertLeave', 'BufLeave' },
-      -- Save at most every 100 milliseconds
-      debounce_delay = 100,
+      enabled = true,
     },
   },
   -- NOTE: Plugins can also be added by using a table,
@@ -707,7 +704,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        -- pyright = {},
+        pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
